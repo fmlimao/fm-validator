@@ -1,7 +1,7 @@
 const messagesValidator = require('./validator-messages');
 const Validator = require('validatorjs');
 
-function validate(ret, fields, rules) {
+const FmValidate = function (ret, fields, rules) {
     const dataValidate = new Validator(fields, rules, messagesValidator);
 
     const fails = dataValidate.fails();
@@ -27,4 +27,4 @@ function validate(ret, fields, rules) {
     return true;
 }
 
-module.exports = validate;
+module.exports = FmValidate;

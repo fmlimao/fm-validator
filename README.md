@@ -15,14 +15,14 @@ npm i fm-validator --save
 ```javascript
 
 const FmJsonResponse = require('fm-json-response');
-const validator = require('fm-validator');
+const FmValidate = require('fm-validator');
 
 let ret = new FmJsonResponse();
 
 try {
     ret.addFields(['name', 'email', 'password']);
 
-    validator(ret, {
+    FmValidate(ret, {
         name: 'A',
         email: 'email@email',
         password: '123',
