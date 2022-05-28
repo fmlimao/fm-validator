@@ -1,30 +1,31 @@
-const messagesValidator = require('./validator-messages');
-const Validator = require('validatorjs');
+const messagesValidator = require('./validator-messages')
+const Validator = require('validatorjs')
 
-const FmValidate = function (ret, fields, rules) {
-    const dataValidate = new Validator(fields, rules, messagesValidator);
+const FmValidate = function (ret, fields, rules, customMessages = {}) {
+  const messages = Object.assign({}, messagesValidator, customMessages)
+  const dataValidate = new Validator(fields, rules, messages)
 
-    const fails = dataValidate.fails();
-    const errors = dataValidate.errors.all();
+  const fails = dataValidate.fails()
+  const errors = dataValidate.errors.all()
 
-    if (fails) {
-        ret.setError(true);
+  if (fails) {
+    ret.setError(true)
 
-        for (let field in errors) {
-            let messages = errors[field];
-            ret.setFieldError(field, true);
+    for (const field in errors) {
+      const messages = errors[field]
+      ret.setFieldError(field, true)
 
-            for (let i in messages) {
-                let message = messages[i];
-                ret.addFieldMessage(field, message);
-            }
-        }
-
-        ret.setCode(400);
-        return false;
+      for (const i in messages) {
+        const message = messages[i]
+        ret.addFieldMessage(field, message)
+      }
     }
 
-    return true;
+    ret.setCode(400)
+    return false
+  }
+
+  return true
 }
 
-module.exports = FmValidate;
+module.exports = FmValidate
